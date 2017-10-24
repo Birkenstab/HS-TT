@@ -1,0 +1,8 @@
+apps:
+  - script   : bin/www
+    name: 'HS-Stundenplan'
+    instances: 1
+    exec_mode: fork
+    autorestart: true
+    env:
+      NODE_ENV: production

@@ -1,0 +1,55 @@
+extends layout
+
+block content
+    -
+        var days = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"]
+        function toDigits (number, digits) {
+            return (new Array(digits).fill("0").join("") + number.toString()).slice(-digits)
+        }
+        function getUrl (date) {
+            if (currentWeek.year() === date.year())
+                return "/" + date.week()
+            else
+                return "/" + date.week() + "-" + date.year()
+        }
+        function getCaption (date) {
+            if (currentWeek.year() === date.year() && thisWeek.year() === date.year())
+                return "Woche " + date.week()
+            else
+                return "Woche " + date.week() + " in " + date.year()
+        }
+
+    h1 Stundenplan Inf1
+    h2 Woche #{thisWeek.week()} in #{thisWeek.year()}
+    div.nav-div
+        a(href=getUrl(lastWeek))= getCaption(lastWeek)
+        a(href="/") Heute
+        a(href=getUrl(nextWeek))= getCaption(nextWeek)
+    table(id="timetable")
+        tr
+            each header, index in headers
+                if index === 0
+                    th.time-header= header
+                else
+                    th.time-header
+                        div #{days[header.getDay()]}
+                        div #{header.getDate()}.#{header.getMonth() + 1}.
+
+        each hour, hourIndex in timetable
+            tr
+                each block, index in hour
+                    if index === 0
+                        th.time
+                            div.hour-no= hourIndex+1
+                            div.time-from #{toDigits(block.timeFrom.hour,2)}:#{toDigits(block.timeFrom.minute,2)}
+                            div.time-to #{toDigits(block.timeTo.hour, 2)}:#{toDigits(block.timeTo.minute, 2)}
+                    else
+                        td
+                            div.block
+                                each lecture in block
+                                    div.lecture(data-lecture=lecture)
+                                        div.name= lecture.shortName
+                                        div.room= lecture.shortRoom
+    p#updated(data-updated=updated.getTime())
+    p#disclaimer Alle Angaben ohne Gewähr
+    script(src="javascripts/timetable.js")
