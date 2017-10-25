@@ -78,7 +78,6 @@ module.exports = [
     action (lecture) {
       /*lecture.shortName += "-Tut"
       lecture.name += "-Tutorium"*/
-      lecture.dates = []
       lecture.dates = [
         {day:2, month: 11, year: 2017} // Ersatzvorlesung wegen Feiertagen
       ]
@@ -135,6 +134,29 @@ module.exports = [
     timeTo: {hour: 15, minute: 30},
     action (lecture) {
       lecture.dates = []
+    }
+  },
+  { // Feiertage und Ferien
+    action(lecture) {
+      const holidays = [
+        {day: 31, month: 10, year: 2017},
+        {day: 1, month: 11, year: 2017},
+        {day: 25, month: 12, year: 2017},
+        {day: 26, month: 12, year: 2017},
+        {day: 27, month: 12, year: 2017},
+        {day: 28, month: 12, year: 2017},
+        {day: 29, month: 12, year: 2017},
+        {day: 30, month: 12, year: 2017},
+        {day: 31, month: 12, year: 2017},
+        {day: 1, month: 1, year: 2018},
+        {day: 2, month: 1, year: 2018},
+        {day: 3, month: 1, year: 2018},
+        {day: 4, month: 1, year: 2018},
+        {day: 5, month: 1, year: 2018},
+        {day: 6, month: 1, year: 2018},
+        {day: 7, month: 1, year: 2018}
+      ]
+      lecture.dates = lecture.dates.filter(date => !_.some(holidays, date))
     }
   }
 ]
