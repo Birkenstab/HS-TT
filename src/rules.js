@@ -79,6 +79,9 @@ module.exports = [
       /*lecture.shortName += "-Tut"
       lecture.name += "-Tutorium"*/
       lecture.dates = []
+      lecture.dates = [
+        {day:2, month: 11, year: 2017} // Ersatzvorlesung wegen Feiertagen
+      ]
     }
   },
   {
