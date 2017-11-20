@@ -158,5 +158,13 @@ module.exports = [
       ]
       lecture.dates = lecture.dates.filter(date => !_.some(holidays, date))
     }
+  },
+  { // BWL fällt aus am 21.11. wegen Exkursionswoche
+    moduleNo: "051745401001",
+    day: 2,
+    room: "AULA - AULA",
+    action (lecture) {
+      _.remove(lecture.dates, {day: 21, month: 11, year: 2017})
+    }
   }
 ]
