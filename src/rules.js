@@ -166,5 +166,13 @@ module.exports = [
     action (lecture) {
       _.remove(lecture.dates, {day: 21, month: 11, year: 2017})
     }
+  },
+  { // BWL fällt aus am 12.12. wegen Exkursion
+    moduleNo: "051745401001",
+    day: 2,
+    room: "AULA - AULA",
+    action (lecture) {
+      _.remove(lecture.dates, {day: 12, month: 12, year: 2017})
+    }
   }
 ]
