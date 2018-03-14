@@ -1,6 +1,6 @@
 apps:
   - script   : bin/www
-    name: 'HS-Stundenplan'
+    name: 'HS-TT'
     instances: 1
     exec_mode: fork
     autorestart: true
