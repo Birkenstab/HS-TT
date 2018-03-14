@@ -37,5 +37,25 @@ module.exports = [
     action(lecture) {
       _.remove(lecture.dates, { day: 13, month: 3, year: 2018 })
     }
+  },
+  { // LINA-Tutorium Mittwoch 14:00
+    moduleNo: "042020072000",
+    day: 3,
+    timeFrom: { hour: 14, minute: 0 },
+    timeTo: { hour: 15, minute: 30 },
+    action(lecture) {
+      lecture.name += " Tutorium"
+      lecture.shortName += "-Tut."
+    }
+  },
+  { // PROG-Tutorium Montag 11:30
+    moduleNo: "043020171000",
+    day: 1,
+    timeFrom: { hour: 11, minute: 30 },
+    timeTo: { hour: 13, minute: 0 },
+    action(lecture) {
+      lecture.name += " Tutorium"
+      lecture.shortName += "-Tut."
+    }
   }
 ]
