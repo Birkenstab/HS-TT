@@ -28,5 +28,14 @@ module.exports = [
       ]
       lecture.dates = lecture.dates.filter(date => !_.some(holidays, date))
     }
+  },
+  { // Erster Vorlesungstag 13.3. erst ab 9:50
+    moduleNo: "043020371000",
+    day: 2,
+    timeFrom: { hour: 8, minute: 0 },
+    timeTo: { hour: 9, minute: 30 },
+    action(lecture) {
+      _.remove(lecture.dates, { day: 13, month: 3, year: 2018 })
+    }
   }
 ]
