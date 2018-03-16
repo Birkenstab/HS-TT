@@ -128,5 +128,26 @@ module.exports = [
     action(lecture) {
       lecture.dates = []
     }
+  },
+  { // TINF Termin am Montag fällt weg weil wir das Dienstags haben
+    moduleNo: "043020471000",
+    day: 1,
+    room: "A108 - Hörsaal A108",
+    timeFrom: { hour: 9, minute: 50 },
+    timeTo: { hour: 11, minute: 20 },
+    action(lecture) {
+      lecture.dates = []
+    }
+  },
+  { // TINF-Tutorium
+    moduleNo: "043020471000",
+    day: 3,
+    room: "A108 - Hörsaal A108",
+    timeFrom: { hour: 11, minute: 30 },
+    timeTo: { hour: 13, minute: 0 },
+    action(lecture) {
+      lecture.name += " Tutorium"
+      lecture.shortName += "-Tut."
+    }
   }
 ]
