@@ -62,12 +62,9 @@ module.exports = [
     moduleNo: "043020271000",
     day: 4,
     action(lecture) {
-      console.log(lecture)
       if (!_.some([{ hour: 11, minute: 30 }, { hour: 14, minute: 0 }], lecture.timeFrom)
         || !_.some([{ hour: 13, minute: 0 }, { hour: 15, minute: 30 }], lecture.timeTo))
         return
-
-      console.log("weiter")
 
       const lab = [
         { day: 29, month: 3, year: 2018 },
@@ -78,12 +75,58 @@ module.exports = [
         { day: 14, month: 6, year: 2018 }
       ]
       if (lecture.room === "C12 - Labor Rechnernetze") {
-        console.log("Filtere Labs")
         lecture.dates = lecture.dates.filter(date => _.some(lab, date))
       } else if (lecture.room === "A103 - Hörsaal A103") {
-        console.log("Filtere Vorlesung")
         lecture.dates = lecture.dates.filter(date => !_.some(lab, date))
       }
+    }
+  },
+  { // MCOM
+    moduleNo: "043020571000",
+    action(lecture) {
+      if (![1, 5].includes(lecture.day))
+        return
+
+      if (!_.some([{ hour: 9, minute: 50 }, { hour: 11, minute: 30 }, { hour: 14, minute: 0 }, { hour: 15, minute: 45 }], lecture.timeFrom)
+        || !_.some([{ hour: 11, minute: 20 }, { hour: 13, minute: 0 }, { hour: 15, minute: 30 }, { hour: 17, minute: 15 }], lecture.timeTo))
+        return
+
+      const lab = [ // Labor und dann auch keine Vorlesung (außer Freitag 8:00 die ist ja immer)
+        { day: 27, month: 4, year: 2018 },
+        { day: 30, month: 4, year: 2018 },
+        { day: 4, month: 5, year: 2018 },
+        { day: 11, month: 5, year: 2018 },
+        { day: 14, month: 5, year: 2018 },
+        { day: 18, month: 5, year: 2018 },
+        { day: 8, month: 6, year: 2018 },
+        { day: 11, month: 6, year: 2018 },
+        { day: 15, month: 6, year: 2018 },
+        { day: 22, month: 6, year: 2018 },
+        { day: 25, month: 6, year: 2018 },
+        { day: 29, month: 6, year: 2018 }
+      ]
+
+      const noLecture = [ // Keine Vorlesung
+        { day: 7, month: 5, year: 2018 },
+        { day: 4, month: 6, year: 2018 },
+        { day: 18, month: 6, year: 2018 }
+      ]
+
+      if (lecture.room === "C22 - Seminarraum Mikrocomputertechnik") {
+        lecture.dates = lecture.dates.filter(date => _.some(lab, date))
+      } else if (lecture.room === "A203 - Hörsaal A203") {
+        lecture.dates = lecture.dates.filter(date => !_.some(lab, date) && !_.some(noLecture, date))
+      }
+    }
+  },
+  { // MCOM Vorlesung wo ich nicht weiß warum die existiert
+    moduleNo: "043020571000",
+    day: 1,
+    room: "C010 - Hörsaal C010",
+    timeFrom: { hour: 14, minute: 0 },
+    timeTo: { hour: 15, minute: 30 },
+    action(lecture) {
+      lecture.dates = []
     }
   }
 ]
