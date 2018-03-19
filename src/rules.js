@@ -114,7 +114,7 @@ module.exports = [
 
       if (lecture.room === "C22 - Seminarraum Mikrocomputertechnik") {
         lecture.dates = lecture.dates.filter(date => _.some(lab, date))
-      } else if (lecture.room === "A203 - Hörsaal A203") {
+      } else if (lecture.room === "C010 - Hörsaal C010") {
         lecture.dates = lecture.dates.filter(date => !_.some(lab, date) && !_.some(noLecture, date))
       }
     }
@@ -122,9 +122,9 @@ module.exports = [
   { // MCOM Vorlesung wo ich nicht weiß warum die existiert
     moduleNo: "043020571000",
     day: 1,
-    room: "C010 - Hörsaal C010",
-    timeFrom: { hour: 14, minute: 0 },
-    timeTo: { hour: 15, minute: 30 },
+    room: "A203 - Hörsaal A203",
+    timeFrom: { hour: 15, minute: 45 },
+    timeTo: { hour: 17, minute: 15 },
     action(lecture) {
       lecture.dates = []
     }
