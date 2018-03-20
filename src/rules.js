@@ -119,7 +119,7 @@ module.exports = [
       }
     }
   },
-  { // MCOM Vorlesung wo ich nicht weiß warum die existiert
+  { // MCOM Vorlesung bei der ich nicht weiß warum die existiert
     moduleNo: "043020571000",
     day: 1,
     room: "A203 - Hörsaal A203",
@@ -129,14 +129,14 @@ module.exports = [
       lecture.dates = []
     }
   },
-  { // TINF Termin am Montag fällt weg weil wir das Dienstags haben
+  { // TINF Termin am Montag fällt nur am 19.3. weg weil das wieder auf Montag gelegt wurde
     moduleNo: "043020471000",
     day: 1,
     room: "A108 - Hörsaal A108",
     timeFrom: { hour: 9, minute: 50 },
     timeTo: { hour: 11, minute: 20 },
     action(lecture) {
-      lecture.dates = []
+      lecture.dates = lecture.dates.filter(date => !_.isEqual(date, { day: 19, month: 3, year: 2018 }))
     }
   },
   { // TINF-Tutorium
@@ -148,6 +148,16 @@ module.exports = [
     action(lecture) {
       lecture.name += " Tutorium"
       lecture.shortName += "-Tut."
+    }
+  },
+  { // TINF Termin am Dienstag fällt nur am 20.3. nicht aus, weil das erst ersatzweise auf Dienstag verschoben wurde, jetzt aber doch nicht
+    moduleNo: "043020471000",
+    day: 2,
+    room: "C07 - PC-Hörsaal",
+    timeFrom: { hour: 14, minute: 0 },
+    timeTo: { hour: 15, minute: 30 },
+    action(lecture) {
+      lecture.dates = lecture.dates.filter(date => _.isEqual(date, { day: 20, month: 3, year: 2018 }))
     }
   }
 ]
