@@ -146,8 +146,18 @@ module.exports = [
     timeFrom: { hour: 11, minute: 30 },
     timeTo: { hour: 13, minute: 0 },
     action(lecture) {
+      const dates = [
+        { day: 28, month: 3, year: 2018 },
+        { day: 11, month: 4, year: 2018 },
+        { day: 25, month: 4, year: 2018 },
+        { day: 9, month: 5, year: 2018 },
+        { day: 6, month: 6, year: 2018 },
+        { day: 20, month: 6, year: 2018 },
+        { day: 4, month: 7, year: 2018 }
+      ];
       lecture.name += " Tutorium"
       lecture.shortName += "-Tut."
+      lecture.dates = lecture.dates.filter(date => _.some(dates, date));
     }
   },
   { // TINF Termin am Dienstag fällt nur am 20.3. nicht aus, weil das erst ersatzweise auf Dienstag verschoben wurde, jetzt aber doch nicht
