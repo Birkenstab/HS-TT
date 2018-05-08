@@ -169,5 +169,19 @@ module.exports = [
     action(lecture) {
       lecture.dates = lecture.dates.filter(date => _.isEqual(date, { day: 20, month: 3, year: 2018 }))
     }
+  },
+
+  { // Einmaliger LINA Matlab Termin am Nachmittag
+    moduleNo: "042020072000",
+    day: 2,
+    room: "C011 - Medienhörsaal C011",
+    timeFrom: { hour: 15, minute: 45 },
+    timeTo: { hour: 17, minute: 15 },
+    action(lecture) {
+      lecture.room = "B312"
+      lecture.shortRoom = "B312"
+      lecture.timeFrom = { hour: 14, minute: 0 }
+      lecture.timeTo = { hour: 15, minute: 30 }
+    }
   }
 ]
