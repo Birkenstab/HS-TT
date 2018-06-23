@@ -183,5 +183,14 @@ module.exports = [
       lecture.timeFrom = { hour: 14, minute: 0 }
       lecture.timeTo = { hour: 15, minute: 30 }
     }
+  },
+  { // RNET 21.6. Vorlesung eine Stunde später
+    moduleNo: "043020271000",
+    day: 4,
+    action(lecture) {
+      if (_.isEqual(lecture.timeFrom, {hour:11,minute:30}) && _.isEqual(lecture.timeTo, {hour:13,minute:0})) {
+        lecture.dates = lecture.dates.filter(date => !_.isEqual(date, { day: 21, month: 6, year: 2018 }))
+      }
+    }
   }
 ]
