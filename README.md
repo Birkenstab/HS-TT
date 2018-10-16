@@ -4,19 +4,42 @@
 ## How it works
 * Load every module you have signed up to
 * Load information to every lecture of those modules
-* Apply defined rules like holidays are lecture free
-* Build HTML site on every HTTP request
+* Apply rules defined in config/rules.js
+* Generate html page on http request
 
 ## Installation
-* Requirements: Node 8
-* `npm install`
-* Create file creds.js in project folder that contains:
-```
-module.exports = {
-   asdf: "your university username",
-   fdsa: "your password"
- };
-```
-* `npm start`
-* HS-TT will start to make dozens of requests, can take up to a few minutes
+### With Docker
+* Requirements: Docker and Docker-Compose
+* `wget https://raw.githubusercontent.com/Birkenstab/HS-TT/master/docker-compose.yml`
+* Create file config/loginCredentials.js that contains:
+    ```
+    module.exports = {
+     username: "your university username",
+     password: "your password"
+    };
+    ```
+* `docker-compose up`
 * Go to [localhost:3000](http://localhost:3000)
+
+
+### Without Docker
+* Requirements: Node 8 and NPM
+* `npm install`
+* Create file config/loginCredentials.js that contains:
+    ```
+    module.exports = {
+       username: "your university username",
+       password: "your password"
+     };
+    ```
+* Create a folder named `cache`
+* `npm start`
+* HS-TT will start to make dozens of requests, this can take up to a few minutes
+* Go to [localhost:3000](http://localhost:3000)
+
+## Defining rules
+* Rules are stored in `config/rules.js`
+* Have a look at `samples/rules.js` to get an idea how the rules work
+
+## Building
+`docker build -t birkenstab/hs-tt .`

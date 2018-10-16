@@ -1,10 +1,10 @@
 version: "2.1"
 services:
   web:
-    image: 'birkenstab/hs-tt'
-    restart: on-failure
+    image: "birkenstab/hs-tt"
+    restart: always
     ports:
-      - '3000:3000'
+      - "3000:3000"
     volumes:
       - ./config:/home/nodejs/app/config
       - ./cache:/home/nodejs/app/cache
