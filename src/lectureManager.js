@@ -4,7 +4,7 @@ const fs = require("fs-extra")
 const _ = require("lodash")
 
 const crawler = require("./crawler")
-const rules = require("./rules")
+const configManager = require("./configManager")
 
 let lectures = null // List of all lectures
 let updated = null // Last updated date
@@ -12,12 +12,12 @@ let updated = null // Last updated date
 async function init () {
   try {
     // Load lectures and last updated date from JSON file
-    const content = JSON.parse(await fs.readFile(path.join(__dirname, "../lectures.json"), "utf-8"))
+    const content = JSON.parse(await fs.readFile(path.join(__dirname, "../cache/lectures.json"), "utf-8"))
     lectures = content.lectures
     updated = new Date(content.updated)
-    console.log("Lectures loaded from file")
+    console.log("Lectures loaded from cache file")
   } catch (e) {
-    console.warn("Error loading lectures from json file", e)
+    console.warn("No cached lectures found. Ignoring it", e)
   }
   updateLectures()
   setInterval(updateLectures, 5 * 60 * 1000) // Load Lectures every 5 minutes
@@ -28,13 +28,17 @@ async function updateLectures () {
     lectures = await crawler.load()
     applyRules()
     updated = new Date()
-    await fs.writeFile(path.join(__dirname, "../lectures.json"), JSON.stringify({
+  } catch (e) {
+    console.error("Error loading lectures from server", e)
+  }
+  try {
+    await fs.writeFile(path.join(__dirname, "../cache/lectures.json"), JSON.stringify({
       lectures,
       updated: updated.getTime()
     }), "utf-8")
-    console.log("Saved lectures")
+    console.log("Saved lectures to cache file")
   } catch (e) {
-    console.error("Error loading lectures", e)
+    console.warn("Error saving lectures to cache file. Ignoring it", e)
   }
 }
 
@@ -47,7 +51,7 @@ function getLecturesOf (date) {
 }
 
 function applyRules () {
-  rules.forEach(rule => {
+  configManager.rules.forEach(rule => {
     const condition = {...rule} // Clone rule Object
     delete condition.action // delete action function because it does not belong to the conditions
     _.filter(lectures, condition)

@@ -66,5 +66,5 @@ typings/
 .idea/
 
 # Project specific
-creds.js
-lectures.json
+config/
+cache/

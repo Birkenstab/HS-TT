@@ -1,7 +1,7 @@
 const requestPromise = require("request-promise")
 const cheerio = require("cheerio")
 
-const loginCredentials = require("../creds.js")
+const configManager = require("./configManager")
 
 const request = requestPromise.defaults({
   jar: true, // Enable Cookies
@@ -12,7 +12,10 @@ async function login () {
   const result = await request({
     uri: "https://lsf.verwaltung.hs-ulm.de/qisserver/rds?state=user&type=1&category=auth.login&startpage=portal.vm&breadCrumbSource=portal",
     method: "POST",
-    form: loginCredentials,
+    form: {
+      asdf: configManager.loginCredentials.username,
+      fdsa: configManager.loginCredentials.password
+    },
     simple: false,
     resolveWithFullResponse: true
   })
@@ -36,7 +39,7 @@ async function loadTimetable () {
   const $ = cheerio.load(page)
   const blocks = $("table[width='100%'][border='1'] > tbody > tr > td > table")
 
-  const modules = new Set();
+  const modules = new Set()
   blocks.each(index => {
     const dings = blocks.eq(index)
     const a = dings.children("tbody").children("tr").children("td.klein").first().find("a")
@@ -65,12 +68,13 @@ async function loadModule (url) {
   const table = $("[summary='Übersicht über alle Veranstaltungstermine']")
   const rows = table.children("tbody").children("tr")
   const lectures = []
-  for (let i = 1; i < rows.length; i++) { // A module contains multiple lectures
+  for (let i = 0; i < rows.length; i++) { // A module contains multiple lectures
     const row = rows.eq(i)
+    if (row.children("th").length > 0)
+      continue;
     const href = row.children("td").eq(0).children("a").attr("href")
 
     lectures.push((async () => {
-
       const page = await request(href) // Make request to get the dates of a lecture
       const $ = cheerio.load(page)
 

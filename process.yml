@@ -1,8 +1,0 @@
-apps:
-  - script   : bin/www
-    name: 'HS-TT'
-    instances: 1
-    exec_mode: fork
-    autorestart: true
-    env:
-      NODE_ENV: production
