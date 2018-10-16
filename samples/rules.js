@@ -14,7 +14,7 @@ module.exports = [
         // Christi Himmelfahrt
         { day: 10, month: 5, year: 2018 },
 
-        // Pfingsferien
+        // Pfingstferien
         { day: 21, month: 5, year: 2018 },
         { day: 22, month: 5, year: 2018 },
         { day: 23, month: 5, year: 2018 },
