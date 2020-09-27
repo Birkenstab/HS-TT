@@ -20,12 +20,12 @@ async function init () {
     console.warn("No cached lectures found. Ignoring it", e)
   }
   updateLectures()
-  setInterval(updateLectures, 5 * 60 * 1000) // Load Lectures every 5 minutes
+  setInterval(updateLectures, 60 * 60 * 1000) // Load Lectures every hour
 }
 
 async function updateLectures () {
-  try {
-    lectures = await crawler.load()
+  try {//Informatik: 482
+    lectures = await crawler.load(482, 1)
     applyRules()
     updated = new Date()
   } catch (e) {

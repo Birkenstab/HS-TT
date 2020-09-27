@@ -29,13 +29,13 @@ function loadCredentials() {
   } catch (e) {
     if (e.code === "MODULE_NOT_FOUND") {
       console.error("Login Credentials file not found.")
-      console.error("You have to create the file config/loginCredentials.js with the following content:")
+      /*console.error("You have to create the file config/loginCredentials.js with the following content:")
       console.error("module.exports = {\n" +
         "  username: \"< Your university username >\",\n" +
         "  password: \"< Your university password >\"\n" +
         "};")
 
-      process.exit(1)
+      process.exit(1)*/
     } else {
       throw e
     }

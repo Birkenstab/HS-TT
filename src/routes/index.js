@@ -7,18 +7,23 @@ const lectureManager = require("../lectureManager")
 
 router.get(["/", "/:date"], function (req, res) {
   let d = moment() // Current date
+  d.day("monday")
   if (req.params.date) {
     const match = req.params.date.match(/^([0-9]{1,2})(?:-([0-9]{4}))?$/) // e.g. '32' or '1-2017'
     if (match) {
-      d.week(parseInt(match[1]))
       if (match[2])
         d.year(parseInt(match[2]))
+      d.isoWeek(parseInt(match[1]))
+      
     } else {
       res.render("error", {message: "Malformed URL", error: {status: "Usage: / or /<KW> or /<KW>-<Jahr>"}})
       return
     }
   }
   d.day("monday")
+
+  const thisWeek = moment(d)
+  
   const timetable = lectureManager.getTimetable({day: d.date(), month: d.month() + 1, year: d.year()})
   if (timetable === null) {
     console.warn("No lectures found")
@@ -35,11 +40,17 @@ router.get(["/", "/:date"], function (req, res) {
 
   const nextWeek = moment(d).add(1, "week")
   const lastWeek = moment(d).subtract(1, "week")
+  nextWeek.day("monday")
+  lastWeek.day("monday")
+
+  console.log("this", thisWeek.format())
+  console.log("next", nextWeek.format())
+  console.log("last", lastWeek.format())
 
   res.render("index", {
-    title: "Stundenplan Inf1",
+    title: "Stundenplan THU Inf1",
     currentWeek: moment(),
-    thisWeek: d,
+    thisWeek: thisWeek,
     lastWeek,
     nextWeek,
     timetable: hours,

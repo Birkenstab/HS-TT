@@ -34,8 +34,9 @@ async function isLoggedIn () {
  * Return URLs of all modules
  * @returns {Promise.<[String]>}
  */
-async function loadTimetable () {
-  const page = await request("https://lsf.verwaltung.hs-ulm.de/qisserver/rds?state=wplan&week=-1&act=show&pool=&show=plan&P.vx=lang&fil=plu&P.subc=plan")
+async function loadTimetable (programNo, semester) {
+  //const page = await request("https://lsf.verwaltung.hs-ulm.de/qisserver/rds?state=wplan&week=-1&act=show&pool=&show=plan&P.vx=lang&fil=plu&P.subc=plan")
+  const page = await request(`https://lsf.verwaltung.hs-ulm.de/qisserver/rds?state=wplan&act=stg&pool=stg&show=plan&P.vx=kurz&r_zuordabstgv.ppflichtid=3&missing=allTerms&k_abstgv.abstgvnr=${programNo}&r_zuordabstgv.phaseid=${8 + semester}&week=-1`)
   const $ = cheerio.load(page)
   const blocks = $("table[width='100%'][border='1'] > tbody > tr > td > table")
 
@@ -134,15 +135,15 @@ async function loadModule (url) {
  * Load lectures from lsf
  * @returns {Promise.<Array>}
  */
-async function load () {
+async function load (programNo, semester) {
   console.log("Starting lecture load…")
-  await login()
-  console.log("Logged In: " + await isLoggedIn())
-  const modules = await loadTimetable()
+  //await login()
+  //console.log("Logged In: " + await isLoggedIn())
+  const modules = await loadTimetable(programNo, semester)
   const lectures = []
   // Wait until all loadModules functions are completed
   await Promise.all(modules.map(async module => lectures.push(...await loadModule(module))))
-  console.log("Loaded lectures")
+  console.log(`Loaded ${lectures.length} lectures in ${modules.length} modules`)
 
   return lectures
 }

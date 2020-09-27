@@ -8,25 +8,24 @@ block content
         }
         function getUrl (date) {
             if (currentWeek.year() === date.year())
-                return "/" + date.week()
+                return "/" + date.isoWeek()
             else
-                return "/" + date.week() + "-" + date.year()
+                return "/" + date.isoWeek() + "-" + date.year()
         }
         function getCaption (date) {
             if (currentWeek.year() === date.year() && thisWeek.year() === date.year())
-                return "Woche " + date.week()
+                return "Woche " + date.isoWeek()
             else
-                return "Woche " + date.week() + " in " + date.year()
+                return "Woche " + date.isoWeek() + " in " + date.year()
         }
 
-    h3 Dieser Stundenplan entspricht wegen der Modulwahl etc. wahrscheinlich nicht mehr deinem Stundenplan an
-    h3 Mit der Katze rechts oben im Eck kannst du den Code bei Github runterladen und bei dir selbst hosten
-    h1 Stundenplan Inf3
-    h2 Woche #{thisWeek.week()} in #{thisWeek.year()}
+    h1 THU Stundenplan Inf1
+    h2 Woche #{thisWeek.isoWeek()} in #{thisWeek.year()}
     div.nav-div
         a(href=getUrl(lastWeek))= getCaption(lastWeek)
         a(href="/") Heute
         a(href=getUrl(nextWeek))= getCaption(nextWeek)
+    h3 Pflichfächer
     table(id="timetable")
         tr
             each header, index in headers
@@ -53,7 +52,7 @@ block content
                                         div.name= lecture.shortName
                                         div.room= lecture.shortRoom
     p#updated(data-updated=updated.getTime())
-    p#disclaimer Alle Angaben ohne Gewähr
+    p#disclaimer Alle Angaben ohne Gewähr, diese Seite enthält nur öffentlich verfügbare Informationen
     script(src="javascripts/timetable.js")
     a(href="https://github.com/Birkenstab/HS-TT" class="github-corner" aria-label="View source on Github")
         svg(width="80" height="80" viewBox="0 0 250 250" class="github-svg" aria-hidden="true")
